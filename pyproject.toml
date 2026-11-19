@@ -2,7 +2,9 @@
 name = "teamdesk"
 version = "0.1.0"
 requires-python = ">=3.12"
-dependencies = []                      # everything lives in groups below
+dependencies = [
+    "pwdlib>=0.4.2",
+]                      # everything lives in groups below
 
 [dependency-groups]
 backend = [
