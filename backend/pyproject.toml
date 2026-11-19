@@ -1,0 +1,61 @@
+[project]
+name = "teamdesk-api"
+version = "1.0.0"
+description = "TeamDesk helpdesk API (FastAPI + async SQLAlchemy + PostgreSQL)"
+requires-python = ">=3.12"
+dependencies = [
+    "fastapi>=0.165,<1",
+    "uvicorn[standard]>=0.54,<1",
+    "python-multipart>=0.0.20",   # needed for the OAuth2 login form
+    "email-validator>=2.4",       # needed by pydantic EmailStr
+    "pydantic>=2.14,<3",
+    "pydantic-settings>=2.16,<3",
+    "sqlalchemy>=2.0.58,<2.1",    # <2.1: Logfire's SQLAlchemy instrumentation does not support 2.1 yet
+    "psycopg[binary]>=3.3.9,<4",
+    "alembic>=1.20,<2",
+    "pyjwt>=2.15,<3",
+    "pwdlib[argon2]>=0.4.2",
+    "logfire[fastapi,sqlalchemy]>=5.6,<6",
+]
+
+[dependency-groups]
+dev = [
+    "pytest>=9.2,<10",
+    "pytest-asyncio>=1.5,<2",
+    "httpx>=0.28,<1",
+    "ruff",
+]
+notebooks = [                      # only needed to run the notebooks in notebooks/
+    "jupyterlab",
+    "nbformat",
+    "nbconvert",
+    "ipykernel",
+    "pandas",
+    "pyyaml",
+    "streamlit>=1.67,<2",          # notebook 07 tests the Streamlit app
+    "logfire[httpx]>=5.6,<6",
+]
+
+[tool.uv]
+package = false                    # an application, not a library: install the dependencies only
+default-groups = ["dev"]           # `uv sync` installs runtime + dev; add `--group notebooks` for Jupyter
+
+[tool.pytest.ini_options]
+pythonpath = ["."]
+testpaths = ["tests"]
+asyncio_mode = "auto"
+asyncio_default_fixture_loop_scope = "function"
+filterwarnings = ["ignore::DeprecationWarning"]
+
+[tool.ruff]
+line-length = 120
+extend-exclude = ["alembic/versions"]  # generated files
+target-version = "py312"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B"]
+ignore = ["E501"]  # line length: not worth failing builds over
+
+[tool.ruff.lint.isort]
+known-first-party = ["app"]
+known-third-party = ["alembic"]  # our ./alembic folder would otherwise be mistaken for first-party code

@@ -1,0 +1,22 @@
+services:
+  db:
+    image: postgres:18-alpine
+    environment:
+      POSTGRES_USER: teamdesk
+      POSTGRES_PASSWORD: teamdesk
+      POSTGRES_DB: teamdesk
+    
+    ports:
+      - "5432:5432"
+    
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U teamdesk -d teamdesk"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+
+volumes:
+  pgdata:

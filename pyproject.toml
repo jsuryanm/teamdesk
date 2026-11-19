@@ -1,0 +1,25 @@
+[project]
+name = "teamdesk"
+version = "0.1.0"
+requires-python = ">=3.12"
+dependencies = []                      # everything lives in groups below
+
+[dependency-groups]
+backend = [
+  "fastapi", "uvicorn[standard]", "pydantic-settings",
+  "sqlalchemy[asyncio]>=2.0,<2.1", "psycopg[binary,pool]", "alembic",
+  "argon2-cffi", "pyjwt", "logfire[fastapi,sqlalchemy,psycopg]",
+]
+frontend = ["streamlit", "httpx", "pydantic", "logfire"]
+dev = ["pytest", "pytest-asyncio", "ruff"]
+notebooks = ["jupyterlab", "ipykernel"]
+
+[tool.uv]
+package = false                        # an app, not an installable library
+default-groups = ["backend", "frontend", "dev"]
+
+[tool.pytest.ini_options]
+asyncio_mode = "auto"
+
+[tool.ruff]
+line-length = 100
