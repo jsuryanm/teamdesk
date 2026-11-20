@@ -2,7 +2,7 @@
 
 from datetime import datetime 
 from sqlalchemy import DateTime, MetaData, func
-# 
+
 # MetaData stores the definitions of tables, columns, data types and constraints 
 from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column 
 # DeclarativeBase is the parent class that translates python classes to db tables
