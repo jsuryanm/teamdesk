@@ -18,7 +18,7 @@ class Settings(BaseSettings):
 
     app_name: str = "TeamDesk API"
     app_version: str = "1.0.0"
-    environment: Literal["local", "test", "production", "staging"]
+    environment: Literal["local", "test", "production", "staging"] = 'local'
 
     database_url: str = "postgresql+psycopg://teamdesk:teamdesk@localhost:5432/teamdesk"
     db_pool_size: int = Field(default=5, ge=1, le=50)
