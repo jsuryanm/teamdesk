@@ -9,7 +9,7 @@ docker compose up --build -d      docker compose logs -f      docker compose dow
 docker compose up -d db
 cd backend && uv sync                      cd frontend && uv sync
 cd backend && uv run alembic upgrade head && uv run python -m app.seed
-cd backend && uv run uvicorn app.main:app --reload
+uv run uvicorn backend.app.main:app --reload
 cd frontend && uv run streamlit run app.py
 # Tests / lint
 cd backend && uv run pytest -q             cd frontend && uv run pytest -q

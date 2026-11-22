@@ -4,7 +4,7 @@ import logfire
 from fastapi import FastAPI 
 from sqlalchemy.engine import Engine 
 
-from app.core.config import Settings 
+from backend.app.core.config import Settings 
 
 _configured = False 
 

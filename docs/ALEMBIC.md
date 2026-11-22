@@ -81,7 +81,7 @@ backend/
 ### What `env.py` does in TeamDesk (4 important lines)
 
 ```python
-import app.models                                   # 1. load every model, so all tables are registered
+import backend.app.models                                   # 1. load every model, so all tables are registered
 config.set_main_option("sqlalchemy.url", get_settings().database_url)   # 2. same URL as the app (from .env / environment)
 target_metadata = Base.metadata                     # 3. "what the database SHOULD look like"
 connectable = engine_from_config(..., poolclass=pool.NullPool)           # 4. connect, run migrations in a transaction

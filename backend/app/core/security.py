@@ -4,7 +4,7 @@ import jwt
 from pwdlib import PasswordHash
  
 
-from app.core.config import Settings
+from backend.app.core.config import Settings
 
 
 _hasher = PasswordHash.recommended()

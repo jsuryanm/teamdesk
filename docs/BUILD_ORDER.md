@@ -37,7 +37,7 @@ Everything else reads settings from here, so it comes first.
 * A validator that refuses the default secret key in `staging`/`production`.
 * `get_settings()` with `@lru_cache`.
 
-✅ **Checkpoint:** `uv run python -c "from app.core.config import get_settings; print(get_settings().environment)"` prints `local`.
+✅ **Checkpoint:** `uv run python -c "from backend.app.core.config import get_settings; print(get_settings().environment)"` prints `local`.
 Concepts: [02-pydantic.md](02-pydantic.md)
 
 ## Step 2: Errors and security helpers (`core/exceptions.py`, `core/security.py`)
@@ -58,7 +58,7 @@ Concepts: [06-auth-and-security.md](06-auth-and-security.md)
 uv run python -c "
 import asyncio
 from sqlalchemy import text
-from app.db.session import engine
+from backend.app.db.session import engine
 async def main():
     async with engine.connect() as c:
         print((await c.execute(text('select 1'))).scalar())
@@ -76,7 +76,7 @@ Order inside the folder matters:
 4. `audit.py`: `AuditLog` (JSONB `details`).
 5. `__init__.py`: import every model, so Alembic can see them.
 
-✅ **Checkpoint:** `uv run python -c "import app.models; from app.db.base import Base; print(sorted(Base.metadata.tables))"` lists 6 tables.
+✅ **Checkpoint:** `uv run python -c "import backend.app.models; from backend.app.db.base import Base; print(sorted(Base.metadata.tables))"` lists 6 tables.
 > Async rule for models: relationships you always need should use `lazy="selectin"` (like `Ticket.tags`) or be loaded explicitly with `joinedload`. A lazy load cannot `await`.
 
 ## Step 5: Migrations (Alembic)
@@ -137,7 +137,7 @@ Concepts: [07-logfire-observability.md](07-logfire-observability.md)
 `create_app()`: lifespan, CORS, request-id middleware, the `DomainError` handler, routers.
 
 ```bash
-cd backend && uv run uvicorn app.main:app --reload
+uv run uvicorn backend.app.main:app --reload
 ```
 ✅ **Checkpoint:** open http://localhost:8000/docs, call `GET /health/ready` (expect `database: up`), register a user, **Authorize**, call `GET /api/v1/users/me`. Check the terminal for Logfire spans.
 

@@ -127,7 +127,7 @@ cd ..
 
 ```bash
 # Terminal 1: API with auto-reload on code changes      (make api)
-cd backend && uv run uvicorn app.main:app --reload --port 8000
+uv run uvicorn backend.app.main:app --reload --port 8000
 
 # Terminal 2: Streamlit UI                              (make ui)
 cd frontend && uv run streamlit run app.py
@@ -286,7 +286,7 @@ Pydantic is used in three places. Knowing which one is failing tells you where t
 **See the effective settings** (secrets are masked):
 
 ```bash
-cd backend && uv run python -c "from app.core.config import get_settings; print(get_settings())"
+cd backend && uv run python -c "from backend.app.core.config import get_settings; print(get_settings())"
 # ... db_pool_size=5 db_max_overflow=10 secret_key=SecretStr('**********') ... logfire_token=None
 ```
 
@@ -294,10 +294,10 @@ cd backend && uv run python -c "from app.core.config import get_settings; print(
 
 ```bash
 cd backend
-DB_POOL_SIZE=0 uv run python -c "from app.core.config import get_settings; get_settings()"
+DB_POOL_SIZE=0 uv run python -c "from backend.app.core.config import get_settings; get_settings()"
 # ValidationError: db_pool_size  Input should be greater than or equal to 1
 
-ENVIRONMENT=production uv run python -c "from app.core.config import get_settings; get_settings()"
+ENVIRONMENT=production uv run python -c "from backend.app.core.config import get_settings; get_settings()"
 # Value error, SECRET_KEY must be set to a random value (>= 32 chars) outside local/test
 ```
 The second one is deliberate: **production can never start with the public development key.** (On Windows PowerShell set the variable first: `$env:ENVIRONMENT="production"`.)

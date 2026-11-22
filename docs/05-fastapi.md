@@ -109,8 +109,8 @@ TeamDesk is **async end to end**: `async def` routes, async SQLAlchemy, and the 
 
 ## Run it
 ```bash
-cd backend && uvicorn app.main:app --reload          # dev
-WEB_CONCURRENCY=4 uvicorn app.main:app               # 4 worker processes
+uvicorn backend.app.main:app --reload          # dev
+WEB_CONCURRENCY=4 uvicorn backend.app.main:app               # 4 worker processes
 ```
 Open http://localhost:8000/docs → **Authorize** (email in `username`, password) → try endpoints.
 
